@@ -7,7 +7,10 @@
 Este bot de telegram tiene la intención de facilitar el control y registro de los pagos, **reenviando los comprobantes de pago al grupo de Tesorería.**
 En un futuro se le podrían añadir más funcionalidades, como por ejemplo, registrar los pagos en un drive, o en el mismo Excel de control de ventas.
 
-Versión de Python usada: **3.11.3**
+Los archivos de log se guardan en el directorio _$HOME/Documents/bot-capturas-log_, con el nombre del archivo en el formato: _DD-MM-YYYY_HH:MM:SS.log_.
+Así, se crea un archivo de log por cada ejecución del bot.
+
+Versión de Python usada a la hora de programar el bot: **3.11.3**
 
 ## ¿Cómo correr el Bot?
 
@@ -23,7 +26,7 @@ git clone https://github.com/lmisea/bot-capturas-ceic.git
 
 ### Segundo paso: Instalar las dependecias
 
-Este bot usa la librería **_python-telegram-bot_**, que se encuentra bajo la licencia [GNU General Public License v3.0](https://github.com/python-telegram-bot/python-telegram-bot/blob/master/LICENSE).
+Este bot usa la librería **_python-telegram-bot_** en la versión 20.3, que se encuentra bajo la licencia [GNU General Public License v3.0](https://github.com/python-telegram-bot/python-telegram-bot/blob/master/LICENSE). Cabe destacar que hay que estar atento a la hora de buscar documentación, porque en internet sale mucha información de versiones anteriores de la librería, que no son compatibles.
 
 Repositorio de GitHub de la librería: [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot).
 

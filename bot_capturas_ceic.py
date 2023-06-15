@@ -5,9 +5,14 @@
 # En un futuro se le podrían añadir más funcionalidades, como por ejemplo, registrar los pagos en un drive, o en el mismo Excel de control de ventas.
 
 # Para el bot uso la librería python-telegram-bot, en la versión 20.3. Hay que estar pendiente porque en internet sale mucha información de versiones anteriores, que no son compatibles.
-# Para instalar la librería: pip install -r requirements.txt
+# Para instalar la librería: 'pip install -r requirements.txt'.
+
+# Los archivos de log se guardan en el directorio $HOME/Documents/bot-capturas-log, con el nombre del archivo en el formato: 'DD-MM-YYYY_HH:MM:SS.log'.
+# Así, se crea un archivo de log por cada ejecución del bot.
 
 import logging
+import os
+from datetime import datetime
 
 from telegram import Update, constants
 from telegram.ext import (Application, CommandHandler, ContextTypes,
@@ -19,9 +24,22 @@ BOT_TOKEN = 'Acá va el token del bot'
 # Configura el ID del grupo a donde se reenviarán los comprobantes
 FORWARD_GROUP_ID = 'Acá va el ID del grupo'
 
+# Obtener el path del directorio donde se van a guardar los logs
+HOME = os.path.expanduser('~')
+DOCUMENTS = os.path.join(HOME, 'Documents')
+LOG_DIR = os.path.join(DOCUMENTS, 'bot-capturas-log')
+
+# Verfica que exista el directorio donde se van a guardar los logs
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+
+# Configura el nombre del archivo de logs
+DATE = datetime.now().strftime('%d-%m-%Y_%H:%M:%S')
+LOG_FILE = os.path.join(LOG_DIR, DATE + '.log')
+
 # Configura el nivel de registro de logs
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                     level=logging.INFO)
+logging.basicConfig(filename=LOG_FILE, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Comando /start

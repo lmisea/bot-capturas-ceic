@@ -1,0 +1,33 @@
+# El workflow instalará las dependencias de Python, ejecutará las pruebas con una sola versión de Python (Python 3.11) y ejecutará el bot
+
+name: Host Bot
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build_and_host:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/test'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Host Bot using Python and secrets
+        env:
+          TOKEN_BOT: ${{ secrets.TOKEN_BOT }}
+          GROUP_ID: ${{ secrets.GROUP_ID }}
+          TRIAL_GROUP_ID: ${{ secrets.TRIAL_GROUP_ID }}
+        run: |
+          python run_bot.py

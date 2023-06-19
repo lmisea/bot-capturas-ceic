@@ -10,6 +10,7 @@
 # Los archivos de log se guardan en el directorio $HOME/.bot-capturas-log/, con el nombre del archivo en el formato: 'DD-MM-YYYY_HH:MM:SS.log'.
 # Así, se crea un archivo de log por cada ejecución del bot.
 
+import json
 import logging
 import os
 from datetime import datetime
@@ -18,11 +19,15 @@ from telegram import Update, constants
 from telegram.ext import (Application, CommandHandler, ContextTypes,
                           MessageHandler, filters)
 
+# Leemos los tokens del archivo json
+token_file = open('tokens.json')
+tokens = json.load(token_file)
+
 # Configura el token de acceso del bot dado por BotFather
-BOT_TOKEN = 'Acá va el token del bot'
+BOT_TOKEN = tokens['bot_token']
 
 # Configura el ID del grupo a donde se reenviarán los comprobantes
-FORWARD_GROUP_ID = 'Acá va el ID del grupo'
+FORWARD_GROUP_ID = tokens['forward_group_id']
 
 # Obtener el path del directorio donde se van a guardar los logs
 HOME = os.path.expanduser('~')

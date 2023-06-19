@@ -7,7 +7,7 @@
 # Para el bot uso la librería python-telegram-bot, en la versión 20.3. Hay que estar pendiente porque en internet sale mucha información de versiones anteriores, que no son compatibles.
 # Para instalar la librería: 'pip install -r requirements.txt'.
 
-# Los archivos de log se guardan en el directorio $HOME/Documents/bot-capturas-log, con el nombre del archivo en el formato: 'DD-MM-YYYY_HH:MM:SS.log'.
+# Los archivos de log se guardan en el directorio $HOME/.bot-capturas-log/, con el nombre del archivo en el formato: 'DD-MM-YYYY_HH:MM:SS.log'.
 # Así, se crea un archivo de log por cada ejecución del bot.
 
 import logging
@@ -26,10 +26,9 @@ FORWARD_GROUP_ID = 'Acá va el ID del grupo'
 
 # Obtener el path del directorio donde se van a guardar los logs
 HOME = os.path.expanduser('~')
-DOCUMENTS = os.path.join(HOME, 'Documents')
-LOG_DIR = os.path.join(DOCUMENTS, 'bot-capturas-log')
+LOG_DIR = os.path.join(HOME, '.bot-capturas-log')
 
-# Verfica que exista el directorio donde se van a guardar los logs
+# Verifica que exista el directorio donde se van a guardar los logs
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
 
@@ -56,8 +55,12 @@ async def reenviar_pago(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Reenvía la imagen al grupo de Tesorería
     await update.message.forward(chat_id=FORWARD_GROUP_ID)
 
+    # Verifica si el usuario tiene last_name y username
+    last_name = '' if user.last_name is None else f' {user.last_name}'
+    username = 'No tiene username' if user.username is None else f'@{user.username}'
+
     # Envía un mensaje al grupo de Tesorería indicando quién envió el comprobante
-    await context.bot.send_message(chat_id=FORWARD_GROUP_ID, text=f"Enviado por: {user.first_name} (@{user.username})")
+    await context.bot.send_message(chat_id=FORWARD_GROUP_ID, text=f"Enviado por: {user.first_name}{last_name} ({username})")
 
     # Envía un mensaje al remitente confirmando el envío del comprobante
     await update.message.reply_text("¡El comprobante del pago ha sido enviado con éxito al CEIC! Gracias 🫶")

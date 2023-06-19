@@ -7,7 +7,7 @@
 Este bot de telegram tiene la intención de facilitar el control y registro de los pagos, **reenviando los comprobantes de pago al grupo de Tesorería.**
 En un futuro se le podrían añadir más funcionalidades, como por ejemplo, registrar los pagos en un drive, o en el mismo Excel de control de ventas.
 
-Los archivos de log se guardan en el directorio _$HOME/Documents/bot-capturas-log_, con el nombre del archivo en el formato: _DD-MM-YYYY_HH:MM:SS.log_.
+Los archivos de log se guardan en el directorio _$HOME/.bot-capturas-log/_, con el nombre del archivo en el formato: _DD-MM-YYYY_HH:MM:SS.log_.
 Así, se crea un archivo de log por cada ejecución del bot.
 
 Versión de Python usada a la hora de programar el bot: **3.11.3**

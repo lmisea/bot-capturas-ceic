@@ -4,6 +4,11 @@ name: Host Bot
 
 on:
   workflow_dispatch:
+    inputs:
+      foward_group:
+        description: "Specify: 'trial_group' or 'group'."
+        required: true
+        default: 'trial_group'
 
 permissions:
   contents: read
@@ -11,7 +16,7 @@ permissions:
 jobs:
   build_and_host:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/test'
+    if: github.ref  == 'refs/heads/test' && (github.event.inputs.foward_group == 'trial_group' || github.event.inputs.foward_group == 'group')
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.11
@@ -29,5 +34,6 @@ jobs:
           TOKEN_BOT: ${{ secrets.TOKEN_BOT }}
           GROUP_ID: ${{ secrets.GROUP_ID }}
           TRIAL_GROUP_ID: ${{ secrets.TRIAL_GROUP_ID }}
+          FORWARD_GROUP: ${{ github.event.inputs.foward_group }}
         run: |
           python run_bot.py
